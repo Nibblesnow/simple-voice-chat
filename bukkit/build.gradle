@@ -1,3 +1,4 @@
+
 buildscript {
     dependencies {
         classpath "info.u-team.curse_gradle_uploader:curse_gradle_uploader:${curse_gradle_uploader_version}"
@@ -6,6 +7,7 @@ buildscript {
 
 plugins {
     id 'java'
+    id 'xyz.jpenilla.run-paper' version "2.2.3"
     id 'com.modrinth.minotaur' version "${minotaur_version}"
     id 'io.papermc.hangar-publish-plugin' version "${hangar_publish_version}"
 }
@@ -96,9 +98,15 @@ tasks.register('copyJarToServer') {
     }
 }
 
+tasks {
+    runServer {
+        minecraftVersion(paper_version)
+    }
+}
+
 build.finalizedBy(copyJarToServer)
 
-tasks.register('runServer') {
+tasks.register('runCraftBukkitServer') {
     doLast {
         javaexec {
             debug = true
